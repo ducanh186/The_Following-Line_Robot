@@ -1,3 +1,8 @@
+/*
+    Đọc giá trị từ các cảm biến LDR và kiểm tra xem có đường line nào được nhận diện hay không
+    Nếu giá trị ADC của LDR lớn hơn ngưỡng thì được coi là có đường line được nhận diện
+    Ngưỡng nhận line cho mỗi LDR được lưu trong mảng thresholds
+*/
 #define INPUT_PIN_1 34
 #define INPUT_PIN_2 35
 #define INPUT_PIN_3 32
@@ -12,8 +17,7 @@ const int LDR_PINS[LDR_COUNT] = {INPUT_PIN_1, INPUT_PIN_2, INPUT_PIN_3, INPUT_PI
 int ldrValues[LDR_COUNT]; // Lưu giá trị ADC của các LDR
 
 // Ngưỡng nhận line cho mỗi LDR
-int thresholds[LDR_COUNT] = {2980, 3290, 3380, 2380, 3080, 3530, 3450, 2400}; 
-
+int thresholds[LDR_COUNT] = {2978, 3115, 3196, 2196, 2793, 3083,  2980, 2150};  
 void setup() {
   Serial.begin(115200); // Khởi tạo giao tiếp nối tiếp với tốc độ 115200 bps
   for (int i = 0; i < LDR_COUNT; i++) {
@@ -27,17 +31,16 @@ void loop() {
     ldrValues[i] = analogRead(LDR_PINS[i]);
   }
 
-  // Kiểm tra nếu giá trị ADC của từng LDR lớn hơn ngưỡng
+  // Kiểm tra trạng thái của từng LDR và in ra trên cùng 1 dòng:
+  // Nếu giá trị ADC > threshold => in "1" (nhận line), ngược lại in "0"
   for (int i = 0; i < LDR_COUNT; i++) {
-    Serial.print("LDR ");
-    Serial.print(i + 1);
-    Serial.print(": ");
     if (ldrValues[i] > thresholds[i]) {
-      Serial.println("Line detected");
+      Serial.print("1 ");
     } else {
-      Serial.println("No line detected");
+      Serial.print("0 ");
     }
   }
-
-  delay(1000); // Đợi 1 giây trước khi đọc lại
+  
+  Serial.println();  // Xuống dòng sau khi in trạng thái của tất cả các LDR
+  delay(5);          // Đợi 5ms trước khi thực hiện lần đo tiếp theo
 }
