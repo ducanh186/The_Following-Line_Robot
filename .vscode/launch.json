@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/ducanh/CODE/The_Following-Line_Robot/ArduinoIDE_module/Test_board",
-      "program": "/home/ducanh/CODE/The_Following-Line_Robot/ArduinoIDE_module/Test_board/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "f:/The_Following-Line_Robot/ArduinoIDE_module/main",
+      "program": "f:/The_Following-Line_Robot/ArduinoIDE_module/main/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
